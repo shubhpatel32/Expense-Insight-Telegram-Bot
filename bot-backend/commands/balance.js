@@ -19,6 +19,11 @@ module.exports = async function balance(bot, msg) {
         balances[member] = 0;
       });
 
+      if (group.expenses.length === 0) {
+        bot.sendMessage(chatId, "No expenses found for this group.");
+        return;
+      }
+
       group.expenses.forEach((expense) => {
         const share = expense.amount / group.members.length;
         group.members.forEach((member) => {

@@ -24,7 +24,10 @@ module.exports = async function split(bot, msg) {
         );
         return;
       }
-
+      if (group.expenses.length === 0) {
+        bot.sendMessage(chatId, "No expenses found for this group.");
+        return;
+      }
       const totalExpense = group.expenses.reduce(
         (sum, expense) => sum + expense.amount,
         0
