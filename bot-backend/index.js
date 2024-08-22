@@ -3,13 +3,13 @@ const TelegramBot = require("node-telegram-bot-api");
 const connectDB = require("./utils/db");
 
 // Import command handlers
-const createGroup = require("./commands/creategroup");
+const createGroup = require("./commands/createGroup");
 const addExpense = require("./commands/addExpense");
 const split = require("./commands/split");
 const balance = require("./commands/balance");
 const report = require("./commands/report");
-const joinGroup = require("./commands/joingroup");
-const leaveGroup = require("./commands/leavegroup");
+const joinGroup = require("./commands/joinGroup");
+const leaveGroup = require("./commands/leaveGroup");
 const help = require("./commands/help");
 const groupInfo = require("./commands/groupInfo");
 
