@@ -15,7 +15,6 @@ module.exports = async function createGroup(bot, msg, match) {
   }
 
   try {
-    // Create new group
     const newGroup = new Group({
       name: groupName,
       members: [username],
@@ -23,7 +22,6 @@ module.exports = async function createGroup(bot, msg, match) {
     });
     await newGroup.save();
 
-    // Find or create user
     let user = await User.findOne({ username });
 
     if (!user) {
@@ -37,7 +35,6 @@ module.exports = async function createGroup(bot, msg, match) {
         );
         return;
       }
-      // Update user's groupId
       await User.findOneAndUpdate({ username }, { groupId: newGroup._id });
     }
 

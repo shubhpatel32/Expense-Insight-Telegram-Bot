@@ -15,7 +15,6 @@ module.exports = async function joinGroup(bot, msg, match) {
   }
 
   try {
-    // Check if the user is already in a group
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       if (existingUser.groupId) {
@@ -26,16 +25,13 @@ module.exports = async function joinGroup(bot, msg, match) {
         return;
       }
 
-      // Update the existing user's groupId if they are not part of any group
       existingUser.groupId = groupId;
       await existingUser.save();
     } else {
-      // Create a new user if they do not exist
       const newUser = new User({ username, groupId });
       await newUser.save();
     }
 
-    // Find the group to join
     const group = await Group.findById(groupId);
     if (group) {
       if (!group.members.includes(username)) {

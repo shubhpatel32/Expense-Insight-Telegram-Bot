@@ -6,7 +6,6 @@ module.exports = async function split(bot, msg) {
   const username = msg.from.username;
 
   try {
-    // Find user's current group
     const user = await User.findOne({ username });
     if (!user || !user.groupId) {
       bot.sendMessage(
@@ -16,7 +15,6 @@ module.exports = async function split(bot, msg) {
       return;
     }
 
-    // Find the group and calculate split
     const group = await Group.findById(user.groupId);
     if (group) {
       if (group.members.length === 0) {
@@ -47,7 +45,6 @@ module.exports = async function split(bot, msg) {
   } catch (error) {
     console.log("Error calculating split:", error);
 
-    // Format and send error message to the user
     const errorMessage =
       "Oops! Something went wrong while calculating the split. Please try again later.";
     bot.sendMessage(chatId, errorMessage);

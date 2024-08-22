@@ -7,8 +7,6 @@ module.exports = async function addExpense(bot, msg, match) {
   const description = match[2];
   const username = msg.from.username;
 
-  // Validate inputs
-
   try {
     if (isNaN(amount) || amount <= 0) {
       bot.sendMessage(
@@ -25,7 +23,7 @@ module.exports = async function addExpense(bot, msg, match) {
       );
       return;
     }
-    // Find user's current group
+
     const user = await User.findOne({ username });
     if (!user || !user.groupId) {
       bot.sendMessage(
@@ -35,7 +33,6 @@ module.exports = async function addExpense(bot, msg, match) {
       return;
     }
 
-    // Find the group and add expense
     const group = await Group.findById(user.groupId);
     if (group) {
       group.expenses.push({ amount, description, payer: username });
@@ -52,9 +49,8 @@ module.exports = async function addExpense(bot, msg, match) {
       );
     }
   } catch (error) {
-    console.error("Error adding expense:", error); // Log error for debugging
+    console.error("Error adding expense:", error);
 
-    // Format and send error message to the user
     const errorMessage =
       "Oops! Something went wrong while adding the expense. Please try again later.";
     bot.sendMessage(chatId, errorMessage);

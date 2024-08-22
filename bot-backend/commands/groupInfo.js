@@ -6,17 +6,14 @@ module.exports = async function groupInfo(bot, msg) {
   const username = msg.from.username;
 
   try {
-    // Find user's current group
     const user = await User.findOne({ username });
     if (!user || !user.groupId) {
       bot.sendMessage(chatId, "You are not part of any group.");
       return;
     }
 
-    // Find the group details
     const group = await Group.findById(user.groupId);
     if (group) {
-      // Create a string listing all group members
       const membersList = group.members.join(", ");
 
       bot.sendMessage(

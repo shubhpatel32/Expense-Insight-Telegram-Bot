@@ -6,17 +6,14 @@ module.exports = async function balance(bot, msg) {
   const username = msg.from.username;
 
   try {
-    // Find user's current group
     const user = await User.findOne({ username });
     if (!user || !user.groupId) {
       bot.sendMessage(chatId, "You are not part of any group.");
       return;
     }
 
-    // Find the group and calculate balances
     const group = await Group.findById(user.groupId);
     if (group) {
-      // Initialize balances
       const balances = {};
       group.members.forEach((member) => {
         balances[member] = 0;
@@ -33,7 +30,6 @@ module.exports = async function balance(bot, msg) {
         });
       });
 
-      // Create payment suggestions
       let payments = [];
       const members = Object.keys(balances);
 

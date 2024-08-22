@@ -2,7 +2,6 @@ require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const connectDB = require("./utils/db");
 
-// Import command handlers
 const createGroup = require("./commands/createGroup");
 const addExpense = require("./commands/addExpense");
 const split = require("./commands/split");
@@ -13,15 +12,11 @@ const leaveGroup = require("./commands/leaveGroup");
 const help = require("./commands/help");
 const groupInfo = require("./commands/groupInfo");
 
-// Replace with your own Telegram bot token
 const token = process.env.BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
-// Connect to MongoDB
 connectDB();
 console.log("Telegram bot started...");
-
-// Function to handle commands
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -31,7 +26,6 @@ bot.onText(/\/start/, (msg) => {
   );
 });
 
-// Register command handlers
 bot.onText(/\/creategroup (.+)/, (msg, match) => createGroup(bot, msg, match));
 bot.onText(/\/addexpense (\d+) (.+)/, (msg, match) =>
   addExpense(bot, msg, match)
@@ -43,3 +37,7 @@ bot.onText(/\/joingroup (.+)/, (msg, match) => joinGroup(bot, msg, match));
 bot.onText(/\/leavegroup/, (msg) => leaveGroup(bot, msg));
 bot.onText(/\/groupinfo/, (msg) => groupInfo(bot, msg));
 bot.onText(/\/help/, (msg) => help(bot, msg));
+
+module.exports = (req, res) => {
+  res.status(200).send("Bot is running");
+};

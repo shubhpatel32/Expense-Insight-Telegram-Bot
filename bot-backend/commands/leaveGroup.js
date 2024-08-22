@@ -6,28 +6,22 @@ module.exports = async function leaveGroup(bot, msg) {
   const username = msg.from.username;
 
   try {
-    // Find user's current group
     const user = await User.findOne({ username });
     if (!user || !user.groupId) {
       bot.sendMessage(chatId, "You are not part of any group.");
       return;
     }
 
-    // Find the group and remove the user
     const group = await Group.findById(user.groupId);
     if (group) {
-      // Remove user from group members
       group.members = group.members.filter((member) => member !== username);
 
-      // Save the updated group
       await group.save();
 
-      // Update user's groupId
       await User.findOneAndUpdate({ username }, { groupId: null });
 
       bot.sendMessage(chatId, "You have left the group.");
 
-      // Optionally notify remaining members
       const remainingMembers = await User.find({
         username: { $in: group.members },
       });

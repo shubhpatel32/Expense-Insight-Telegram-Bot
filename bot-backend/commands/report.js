@@ -6,17 +6,14 @@ module.exports = async function report(bot, msg) {
   const username = msg.from.username;
 
   try {
-    // Find user's current group
     const user = await User.findOne({ username });
     if (!user || !user.groupId) {
       bot.sendMessage(chatId, "You are not part of any group.");
       return;
     }
 
-    // Find the group and generate report
     const group = await Group.findById(user.groupId);
     if (group) {
-      // Format the report
       const report = group.expenses
         .map(
           (exp) =>
