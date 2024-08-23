@@ -40,7 +40,7 @@ if (isProduction) {
     console.log(`Server running on http://localhost:${port}`);
   });
 
-  const webhookUrl = `${process.env.VERCEL_URL}/bot${token}`;
+  const webhookUrl = `${process.env.RENDER_URL}/bot${token}`;
   bot.setWebHook(webhookUrl);
 
   module.exports = app;
